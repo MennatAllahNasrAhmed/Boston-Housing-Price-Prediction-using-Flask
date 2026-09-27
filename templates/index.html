@@ -1,109 +1,162 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Boston Housing Price Prediction</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="page">
 
-        <h1>Boston Housing Price Prediction</h1>
+        <div class="container">
 
-        <p class="description">
-            Enter the housing features to predict the house price.
+            <div class="header">
+                <div class="icon">🏠</div>
+
+                <h1>Boston Housing</h1>
+
+                <p class="subtitle">
+                    House Price Prediction
+                </p>
+
+                <p class="description">
+                    Enter the housing features below to predict
+                    the estimated house price.
+                </p>
+            </div>
+
+
+            <form action="/predict" method="POST">
+
+                <div class="input-group">
+
+                    <label for="RM">
+                        Average Number of Rooms
+                    </label>
+
+                    <span class="feature-name">RM</span>
+
+                    <input
+                        type="number"
+                        step="any"
+                        id="RM"
+                        name="RM"
+                        placeholder="Example: 6.575"
+                        required
+                    >
+
+                    <small>
+                        Average number of rooms per dwelling
+                    </small>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="LSTAT">
+                        Lower Status Population
+                    </label>
+
+                    <span class="feature-name">LSTAT</span>
+
+                    <input
+                        type="number"
+                        step="any"
+                        id="LSTAT"
+                        name="LSTAT"
+                        placeholder="Example: 4.98"
+                        required
+                    >
+
+                    <small>
+                        Percentage of lower status population
+                    </small>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="PTRATIO">
+                        Pupil-Teacher Ratio
+                    </label>
+
+                    <span class="feature-name">PTRATIO</span>
+
+                    <input
+                        type="number"
+                        step="any"
+                        id="PTRATIO"
+                        name="PTRATIO"
+                        placeholder="Example: 15.3"
+                        required
+                    >
+
+                    <small>
+                        Pupil-teacher ratio by town
+                    </small>
+
+                </div>
+
+
+                <button type="submit">
+                    <span>Predict House Price</span>
+                    <span class="arrow">→</span>
+                </button>
+
+            </form>
+
+
+            {% if prediction is defined %}
+
+            <div class="result">
+
+                <div class="result-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <p class="result-title">
+                        Estimated House Price
+                    </p>
+
+                    <p class="price">
+                        {{ prediction }}
+                    </p>
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if error is defined %}
+
+            <div class="error">
+                <strong>⚠ Error</strong>
+                <p>{{ error }}</p>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        <p class="footer">
+            Boston Housing Price Prediction • Machine Learning Model
         </p>
-
-        <form action="/predict" method="POST">
-
-            <label for="RM">
-                RM - Average Number of Rooms
-            </label>
-
-            <input
-                type="number"
-                step="any"
-                id="RM"
-                name="RM"
-                placeholder="Example: 6.575"
-                required
-            >
-
-
-            <label for="LSTAT">
-                LSTAT - Lower Status Population (%)
-            </label>
-
-            <input
-                type="number"
-                step="any"
-                id="LSTAT"
-                name="LSTAT"
-                placeholder="Example: 4.98"
-                required
-            >
-
-
-            <label for="PTRATIO">
-                PTRATIO - Pupil-Teacher Ratio
-            </label>
-
-            <input
-                type="number"
-                step="any"
-                id="PTRATIO"
-                name="PTRATIO"
-                placeholder="Example: 15.3"
-                required
-            >
-
-
-            <button type="submit">
-                Predict
-            </button>
-
-        </form>
-
-
-        {% if prediction is defined %}
-
-        <div class="result">
-
-            <h2>
-                Predicted House Price:
-            </h2>
-
-            <p>
-                {{ prediction }}
-            </p>
-
-        </div>
-
-        {% endif %}
-
-
-        {% if error is defined %}
-
-        <div class="error">
-
-            <p>{{ error }}</p>
-
-        </div>
-
-        {% endif %}
 
     </div>
 
 </body>
 
 </html>
+
